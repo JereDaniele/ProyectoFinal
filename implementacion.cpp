@@ -19,4 +19,16 @@ int Persona::getDNI(){
 int Persona::getEdad(){
     return edad;
 };
+Autor::Autor(std::string nombre, int DNI, int edad, std::string medio){
+    Persona.setNombre(nombre);
+    Persona.setDNI(DNI);
+    Persona.setEdad(edad);
+    setMedio(medio);
+}
+void Autor::setMedio(std::string medio){
+    this->medio=medio;
+}
+std::string Autor::getMedio(){
+    return medio;
+}
     
