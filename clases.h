@@ -35,14 +35,35 @@ class Usuario : public Persona
 public:
     Usuario(std::string nombre, int DNI, int edad);
 };
+
+class Comentario
+{
+private:
+    int numero;
+    std::string texto;
+    Usuario usuario;
+
+public:
+    Comentario(int numero, std::string texto, Usuario usuario);
+    void setNumero(int numero);
+    void setTexto(std::string texto);
+    void setUsuario(Usuario usuario);
+    int getNumero();
+    int getTexto();
+    Usuario getUsuario();
+};
+
 class Noticia
 {
 private:
     std::string titulo, detalle;
     int dia, mes, ano;
     Autor autor;
+    
 
 public:
+    std::vector<Comentario>comentarios;
+    
     Noticia(std::string titulo, std::string detalle, int dia, int mes, int ano, Autor autor);
     void setTitulo(std::string titulo);
     void setDetalle(std::string detalle);
@@ -61,22 +82,10 @@ public:
     int getEdad();
     Autor getAutor();
 };
-class Comentario
-{
-private:
-    int numero;
-    std::string texto;
-    Usuario usuario;
 
-public:
-    Comentario(int numero, std::string texto, Usuario usuario);
-    void setNumero(int numero);
-    void setTexto(std::string texto);
-    void setUsuario(Usuario usuario);
-    int getNumero();
-    int getTexto();
-    Usuario getUsuario();
-};
+std::vector<Autor> autores;
+std::vector<Usuario> usuarios;
+std::vector<Noticia> noticias;
 
 int noticiasPorAno(int ano);
 int noticiasPorMes(int mes);
