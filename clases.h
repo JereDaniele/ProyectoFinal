@@ -95,3 +95,9 @@ void publicarNoticia();
 void registrarAutor();
 void comentarNoticia();
 void registrarUsuario();
+
+void guardarUsuarios();
+void guardarAutores();
+void guardarNoticias();
+void guardar();
+
