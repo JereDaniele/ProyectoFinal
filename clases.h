@@ -72,14 +72,10 @@ public:
     Comentario(int numero, std::string texto, Usuario usuario);
     void setNumero(int numero);
     void setTexto(std::string texto);
-    void setNombre(std::string nombre);
-    void setDNI(int DNI);
-    void setEdad(int edad);
+    void setUsuario(Usuario usuario);
     int getNumero();
     int getTexto();
-    int getNombre();
-    int getDNI();
-    int getEdad();
+    Usuario getUsuario();
 };
 
 int noticiasPorAno(int ano);
