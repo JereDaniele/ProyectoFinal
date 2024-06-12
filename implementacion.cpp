@@ -85,3 +85,34 @@ int Noticia::getAno(){
 Autor Noticia::getAutor(){
     return autor;
 }
+Comentario::Comentario(int numero, std::string texto, Usuario usuario){
+    setNumero(numero);
+    setTexto(texto);
+    setNombre(nombre);
+    setUsuario(usuario);
+}
+void Comentario::setNumero(int numero){
+    this->numero=numero;
+}
+void Comentario::setTexto(std::string texto){
+    this->texto=texto;
+}
+void Comentario::setNombre(std::string nombre){
+    this->nombre=nombre;
+}
+void Comentario::setUsuario(Usuario usuario){
+    this->autor=autor;
+}
+int Comentario::getNumero(){
+    return numero;
+}
+std::string Comentario::getTexto(){
+    return texto;
+}
+std::string Comentario::getNombre(){
+    return nombre;
+}
+Usuario Comentario::getUsuario(){
+    return usuario;
+}
+    
