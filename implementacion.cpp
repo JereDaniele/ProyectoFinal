@@ -244,3 +244,41 @@ void registrarUsuario() {
     usuarios.push_back(Usuario(nombre, DNI, edad));
     std::cout << "Usuario registrado exitosamente.\n";
 }    
+
+void guardarUsuarios(){
+    std::ofstream usuariostxt;
+    usuariostxt.open("usuarios.txt");
+    std::cout<<"DNI"<<"     "<<"Nombre"<<"     "<<"Edad\n";
+    for(auto& usuario:usuarios){
+        usuariostxt<<usuario.getDNI()<<"  "<<usuario.getNombre()<<"   "<<usuario.getEdad()<<'\n';
+    }
+    usuariostxt.close();
+}
+void guardarAutores(){
+    std::ofstream autorestxt;
+    autorestxt.open("autores.txt");
+    std::cout<<"DNI"<<"     "<<"Nombre"<<"     "<<"Edad"<<"     "<<"medio\n";
+    for(auto& autor:autores){
+        autorestxt<<autor.getDNI()<<"  "<<autor.getNombre()<<"  "<<autor.getEdad()<<"  "<<autor.getMedio()<<'\n';
+    }
+    autorestxt.close();
+}
+void guardarNoticias(){
+    std::ofstream noticiastxt;
+    noticiastxt.open("noticias.txt");
+    std::cout<<"titulo"<<"     "<<"detalle"<<"     "<<"dia"<<"     "<<"mes"<<"     "<<"ano"<<"     "<<"nombre del autor\n";
+    for(auto& noticia:noticias){
+        noticiastxt<<noticia.getTitulo()<<"  "<<noticia.getDetalle()<<"  "<<noticia.getDia()<<"  "<<noticia.getMes()<<"  "<<noticia.getAno()<<"  "<<noticia.getAutor().getNombre()<<'\n';
+        noticiastxt<<"comentarios de la noticia: \n";
+        std::cout<<"numero"<<"     "<<"texto"<<"     "<<"nombre del usuario\n";
+        for(auto& comentario:noticia.comentarios){
+            noticiastxt<<comentario.getNumero()<<"  "<<comentario.getTexto()<<"  "<<comentario.getUsuario().getNombre()<<'\n';
+        }
+    }
+}
+
+void guardar(){
+    guardarUsuarios();
+    guardarAutores();
+    guardarNoticias();
+}
