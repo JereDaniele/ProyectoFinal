@@ -49,6 +49,7 @@ public:
     void setDia(int dia);
     void setMes(int mes);
     void setAno(int ano);
+    void setAutor(Autor autor);
     std::string getTitulo();
     std::string getDetalle();
     std::string getNombre();
@@ -58,6 +59,7 @@ public:
     int getAno();
     int getDNI();
     int getEdad();
+    Autor getAutor();
 };
 class Comentario
 {
