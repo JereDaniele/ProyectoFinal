@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
-#include <fstream>
 #include <sstream>
 #include <string>
+#include <fstream>
 
 class Persona
 {
@@ -25,7 +25,8 @@ private:
     std::string medio;
 
 public:
-    Autor();
+    Autor(){};
+    Autor(std::string nombre);
     Autor(std::string nombre, int DNI, int edad, std::string medio);
     void setMedio(std::string medio);
     std::string getMedio();
@@ -33,6 +34,7 @@ public:
 class Usuario : public Persona
 {
 public:
+    Usuario(){};
     Usuario(std::string nombre, int DNI, int edad);
 };
 
@@ -49,7 +51,7 @@ public:
     void setTexto(std::string texto);
     void setUsuario(Usuario usuario);
     int getNumero();
-    int getTexto();
+    std::string getTexto();
     Usuario getUsuario();
 };
 
@@ -59,11 +61,10 @@ private:
     std::string titulo, detalle;
     int dia, mes, ano;
     Autor autor;
-    
 
 public:
-    std::vector<Comentario>comentarios;
-    
+    std::vector<Comentario> comentarios;
+
     Noticia(std::string titulo, std::string detalle, int dia, int mes, int ano, Autor autor);
     void setTitulo(std::string titulo);
     void setDetalle(std::string detalle);
@@ -88,7 +89,7 @@ std::vector<Usuario> usuarios;
 std::vector<Noticia> noticias;
 
 int noticiasPorAno(int ano);
-int noticiasPorMes(int mes);
+int noticiasPorMes(int mes,int ano);
 void mostrarNoticia(std::string titulo);
 void articulosPorAutor(int DNI);
 void publicarNoticia();
@@ -96,8 +97,13 @@ void registrarAutor();
 void comentarNoticia();
 void registrarUsuario();
 
+
+void cargarUsuarios();
+void cargarAutores();
+void cargarNoticia();
+void cargar();
+
 void guardarUsuarios();
 void guardarAutores();
 void guardarNoticias();
 void guardar();
-
