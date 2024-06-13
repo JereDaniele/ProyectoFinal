@@ -1,10 +1,11 @@
 #include"implementacion.cpp"
 int main(){
 
+    cargar();
 
     int opcion;
-    while (opcion<10){
-        std::cout<< "Menu: ";
+    do{
+        std::cout<< "Menu: \n";
         std::cout<< "1. Registrar Autor. \n";
         std::cout<< "2. Registrar Usuario. \n ";
         std::cout<< "3. Cargar Noticia. \n ";
@@ -25,11 +26,19 @@ int main(){
         case 5: {
             int ano;
             std::cout<<"Ingrese el año que desea ver: ";
-            cin>>ano;
+            std::cin>>ano;
             noticiasPorAno(ano);
             break;
         }
-        case 6: noticiasPorMes(); break;
+        case 6: {
+            int mes,ano;
+            std::cout<<"indique el mes actual: ";
+            std::cin>>mes; 
+            std::cout<<"indique el ano actual: ";
+            std::cin>>ano;          
+            noticiasPorMes(mes,ano);
+            break;
+        }
         case 7: {
             std::string titulo;
             std::cout<<"Coloque el titulo de la noticia: ";
@@ -41,16 +50,15 @@ int main(){
         case 8:{
             int DNI;
             std::cout<<"Coloque el dni del autor: ";
-            cin>>DNI;
+            std::cin>>DNI;
             articulosPorAutor(DNI);
             break;
         }
-        case 9: guardar();
+        case 9:guardar();
         return 0;
 
-         default: cout << "Opcion invalida. Intente de nuevo. \n";
+         default: std::cout << "Opcion invalida. Intente de nuevo. \n";
     }
-    return 0;
-
-    }
+    }while (true);
 }
+
