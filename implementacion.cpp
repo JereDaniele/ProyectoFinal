@@ -1,7 +1,7 @@
 #include"clases.h"
 
 
-Persona::Persona(){};
+Persona::Persona(): DNI(0), edad(0) {};
 void Persona::setNombre(std::string nombre)
 {
     this->nombre = nombre;
