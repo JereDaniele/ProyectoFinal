@@ -11,8 +11,8 @@ private:
     int DNI, edad;
 
 public:
-    Persona();
-    void setNombre(std::string);
+    Persona(): DNI(0), edad(0) {}:
+    void setNombre(std::string nombre);
     void setDNI(int DNI);
     void setEdad(int edad);
     std::string getNombre();
@@ -25,7 +25,7 @@ private:
     std::string medio;
 
 public:
-    Autor(){};
+    Autor() {};
     Autor(std::string nombre);
     Autor(std::string nombre, int DNI, int edad, std::string medio);
     void setMedio(std::string medio);
