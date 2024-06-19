@@ -38,6 +38,12 @@ Autor::Autor(std::string nombre)
 {
     setNombre(nombre);
 }
+Autor::Autor(std::string nombre, int DNI, std::string medio)
+{
+    setNombre(nombre);
+    setDNI(DNI);
+    setMedio(medio);
+}
 Autor::Autor(std::string nombre, int DNI, int edad, std::string medio)
 {
     setNombre(nombre);
@@ -63,6 +69,16 @@ Noticia::Noticia(std::string titulo, std::string detalle, int dia, int mes, int 
     setAno(ano);
     setAutor(autor);
 }
+
+Noticia::Noticia(std::string titulo, std::string detalle, int dia, int mes, int ano, std::string nombre){
+    setTitulo(titulo);
+    setDetalle(detalle);
+    setDia(dia);
+    setMes(mes);
+    setAno(ano);
+    autor.setNombre(nombre);
+}
+
 void Noticia::setTitulo(std::string titulo)
 {
     this->titulo = titulo;
@@ -110,6 +126,12 @@ int Noticia::getAno()
 Autor Noticia::getAutor()
 {
     return autor;
+}
+Comentario::Comentario(int numero, std::string texto, std::string nombre)
+{
+    setNumero(numero);
+    setTexto(texto);
+    usuario.setNombre(nombre);
 }
 Comentario::Comentario(int numero, std::string texto, Usuario usuario)
 {
@@ -174,7 +196,7 @@ void mostrarNoticia(std::string titulo)
             std::cout << "Titulo: " << noticia.getTitulo() << "\n";
             std::cout << "Detalle: " << noticia.getDetalle() << "\n";
             std::cout << "Fecha: " << noticia.getDia() << "/" << noticia.getMes() << "/" << noticia.getAno() << "\n";
-            std::cout << "Autor: " << (noticia.getAutor()).getNombre() << " (" << (noticia.getAutor()).getMedio() << ")\n";
+            std::cout << "Autor: " << (noticia.getAutor()).getNombre() << " " << noticia.getAutor().getMedio() << "\n";
             std::cout << "Comentarios:\n";
             for (auto &comentario : noticia.comentarios)
             {
@@ -292,93 +314,140 @@ void registrarUsuario()
 }
 
 
+void cargarUsuarios() {
+    std::ifstream usuariostxt("usuarios.txt");
+    if (!usuariostxt.is_open()) {
+      throw std::runtime_error("Error: Primero carga un usuario");
+    }
+    std::string linea;
+    while (std::getline(usuariostxt, linea)) {
+      std::istringstream iss(linea);
+    
+      if (linea == "DNI~Nombre~Edad~") {continue;}
+        std::string dni, nombre, eda;
+        if (std::getline(iss, dni, '~') && std::getline(iss, nombre, '~') && std::getline(iss, eda, '~')) {
+          if (linea.empty()) {
+            continue;
+          }
+        }
+        try {
+          int DNI = std::stoi(dni);
+          int edad = std::stoi(eda);
+            usuarios.push_back(Usuario(nombre,DNI,edad));
+        
+        } catch (const std::invalid_argument &e) {
+          std::cout << "Error de conversion en la linea " << linea << std::endl;
+        }
+        
+      }
+    }
+  
+  
 
+void cargarAutores() {
+    std::ifstream autorestxt("autores.txt");
+    if (!autorestxt.is_open()) {
+      throw std::runtime_error("Error: Primero carga un autor");
+    }
+    std::string linea;
+    while (std::getline(autorestxt, linea)) {
+      std::istringstream iss(linea);
+    
+      if (linea != "DNI~Nombre~medio~") {
+        std::string dni, nombre, medio;
+        if (std::getline(iss, dni, '~') && std::getline(iss, nombre, '~') && std::getline(iss, medio, '~')) {
+          if (linea.empty()) {
+            continue;
+          }
+        }
+        try {
+          int DNI = std::stoi(dni);
+          
+          autores.push_back(Autor(nombre,DNI,medio));
+        } catch (const std::invalid_argument &e) {
+          std::cout << "Error de conversion en la linea " << linea << std::endl;
+        }
+      }
+    }
+  }
 
+void cargarNoticia() {
+    std::ifstream noticiastxt("noticias.txt");
+    if (!noticiastxt.is_open()) {
+        throw std::runtime_error("Error: Primero carga una noticia. No se pudo abrir el archivo 'noticias.txt'.");
+    }
+    
+    std::string linea;
+    while (std::getline(noticiastxt, linea)) {
+        std::istringstream iss(linea);
 
+        
+        if (linea == "titulo~detalle~dia~mes~ano~nombredelautor~") {
+            continue;
+        }
 
+        std::string titulo, detalle, Di, Me, An, nombre;
+        if (std::getline(iss, titulo, '~') && std::getline(iss, detalle, '~') && 
+            std::getline(iss, Di, '~') && std::getline(iss, Me, '~') && 
+            std::getline(iss, An, '~') && std::getline(iss, nombre, '~')) {
+            
+            if (linea.empty()) {
+                continue;
+            }
 
+            try {
+                int dia = std::stoi(Di);
+                int mes = std::stoi(Me);
+                int ano = std::stoi(An);
 
-
-
-void cargarUsuarios()
-{
-    std::ifstream usuariostxt;
-    usuariostxt.open("usuarios.txt");
-    int DNI;
-    std::string nombre, a, b, c, dni, ed;
-    int edad;
-    usuariostxt >> a;
-    usuariostxt >> b;
-    usuariostxt >> c;
-    for (auto &usuario : usuarios)
-    {
-        usuariostxt >> dni;
-        usuariostxt >> nombre;
-        usuariostxt >> ed;
-        DNI = stoi(dni);
-        edad = stoi(ed);
-        usuarios.push_back(Usuario(nombre, DNI, edad));
+                noticias.push_back(Noticia(titulo, detalle, dia, mes, ano, nombre));
+            } 
+            catch (const std::invalid_argument &e) {
+                std::cout << "Error de conversión en la línea: " << linea << std::endl;
+            }
+            catch (const std::out_of_range &e) {
+                std::cout << "Número fuera de rango en la línea: " << linea << std::endl;
+            }
+        } else {
+            std::cout << "Formato incorrecto en la línea: " << linea << std::endl;
+        }
     }
 }
-void cargarAutores()
-{
-    std::ifstream autorestxt;
-    autorestxt.open("autores.txt");
-    int DNI;
-    std::string nombre, a, b,
-        c, d, dni, ed, medio;
-    int edad;
-    autorestxt >> a;
-    autorestxt >> b;
-    autorestxt >> c;
-    autorestxt >> d;
-    for (auto &autor : autores)
-    {
-        autorestxt >> dni;
-        std::cin.ignore();
-        autorestxt >> nombre;
-        autorestxt >> ed;
-        autorestxt >> medio;
-        DNI = stoi(dni);
-        edad = stoi(ed);
-        autores.push_back(Autor(nombre, DNI, edad, medio));
+  
+void cargarComentarios() {
+    std::ifstream comentariostxt("comentarios.txt");
+    if (!comentariostxt.is_open()) {
+      throw std::runtime_error("Error: Primero carga un comentario");
     }
-}
-void cargarNoticia()
-{
-    std::ifstream noticiastxt;
-    noticiastxt.open("autores.txt");
-    std::string a, b, c, d, e, f, titulo, detalle, di, me, an, nombre;
-    int dia, mes, ano;
-
-    noticiastxt >> a;
-    noticiastxt >> b;
-    noticiastxt >> c;
-    noticiastxt >> d;
-    noticiastxt >> e;
-    noticiastxt >> f;
-    for (auto &autor : autores)
-    {
-        std::cin.ignore();
-        noticiastxt >> titulo;
-        noticiastxt >> detalle;
-        noticiastxt >> di;
-        noticiastxt >> me;
-        noticiastxt >> an;
-        noticiastxt >> nombre;
-        dia = stoi(di);
-        mes = stoi(me);
-        ano = stoi(an);
-
-        noticias.push_back(Noticia(titulo, detalle, dia, mes, ano, Autor(nombre)));
+    std::string linea;
+    while (std::getline(comentariostxt, linea)) {
+      std::istringstream iss(linea);
+    
+      if (linea != "numero~texto~nombreUsuario~") {
+        std::string num, texto, nombreUsuario;
+        if (std::getline(iss, num, '~') && std::getline(iss, texto, '~') && std::getline(iss, nombreUsuario, '~')) {
+          if (linea.empty()) {
+            continue;
+          }
+        }
+        try {
+          int numero = std::stoi(num);
+          for(auto &Noticia:noticias){
+          Noticia.comentarios.push_back(Comentario(numero, texto, nombreUsuario));
+          }
+        } catch (const std::invalid_argument &e) {
+          std::cout << "Error de conversion en la linea " << linea << std::endl;
+        }
+      }
     }
-}
+  }
 
 void cargar()
 {
     cargarUsuarios();
     cargarAutores();
     cargarNoticia();
+    cargarComentarios();
 }
 
 
@@ -386,10 +455,10 @@ void guardarUsuarios()
 {
     std::ofstream usuariostxt;
     usuariostxt.open("usuarios.txt");
-    usuariostxt << "DNI" << "     " << "Nombre" << "     " << "Edad\n";
-    for (auto &usuario : usuarios)
+    usuariostxt <<"DNI~Nombre~Edad~"<<"\n";
+    for (auto &Usuario : usuarios)
     {
-        usuariostxt << usuario.getDNI() << "  " << usuario.getNombre() << "   " << usuario.getEdad() << '\n';
+        usuariostxt << Usuario.getDNI() << "~" << Usuario.getNombre() << "~" << Usuario.getEdad() << "~\n";
     }
     usuariostxt.close();
 }
@@ -397,10 +466,10 @@ void guardarAutores()
 {
     std::ofstream autorestxt;
     autorestxt.open("autores.txt");
-    autorestxt << "DNI" << "     " << "Nombre"<< "     " << "medio\n";
+    autorestxt <<"DNI~Nombre~medio~"<<"\n";
     for (auto &autor : autores)
     {
-        autorestxt << autor.getDNI() << "  " << autor.getNombre() << "  " << autor.getMedio() << '\n';
+        autorestxt << autor.getDNI() << "~" << autor.getNombre() << "~" << autor.getMedio() << "~\n";
     }
     autorestxt.close();
 }
@@ -408,22 +477,35 @@ void guardarNoticias()
 {
     std::ofstream noticiastxt;
     noticiastxt.open("noticias.txt");
-    noticiastxt << "titulo" << "     " << "detalle" << "     " << "dia" << "     " << "mes" << "     " << "ano" << "     " << "nombre del autor\n";
+    noticiastxt <<"titulo~detalle~dia~mes~ano~nombredelautor~"<<'\n';
     for (auto &noticia : noticias)
     {
-        noticiastxt << noticia.getTitulo() << "  " << noticia.getDetalle() << "  " << noticia.getDia() << "  " << noticia.getMes() << "  " << noticia.getAno() << "  " << noticia.getAutor().getNombre() << '\n';
-        noticiastxt << "comentarios de la noticia: \n";
-        std::cout << "numero" << "     " << "texto" << "     " << "nombre del usuario\n";
-        for (auto &comentario : noticia.comentarios)
-        {
-            noticiastxt << comentario.getNumero() << "  " << comentario.getTexto() << "  " << comentario.getUsuario().getNombre() << '\n';
-        }
+        noticiastxt << noticia.getTitulo() << "~" << noticia.getDetalle() << "~" << noticia.getDia() << "~" << noticia.getMes() << "~" << noticia.getAno() << "~" << noticia.getAutor().getNombre() << "~\n";
+       
     }
 }
+void guardarComentarios(){
+    std::ofstream comentariostxt;
+    comentariostxt.open("comentarios.txt");
+    comentariostxt <<"numero~texto~nombreUsuario~"<<"\n";
+    for(auto &noticia : noticias)
+    {
+         for (auto &comentario : noticia.comentarios)
+        {
+            comentariostxt << comentario.getNumero() << "~" << comentario.getTexto() << "~" << comentario.getUsuario().getNombre() << "~\n";
+        }
+    }
+       
+    }
+
 
 void guardar()
 {
     guardarUsuarios();
     guardarAutores();
     guardarNoticias();
+    guardarComentarios();
 }
+
+
+
