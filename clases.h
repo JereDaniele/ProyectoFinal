@@ -3,6 +3,8 @@
 #include <sstream>
 #include <string>
 #include <fstream>
+#include <stdexcept>
+#include <limits>
 
 class Persona
 {
@@ -94,7 +96,7 @@ std::vector<Noticia> noticias;
 int noticiasPorAno(int ano);
 int noticiasPorMes(int mes,int ano);
 void mostrarNoticia(std::string titulo);
-void articulosPorAutor(int DNI);
+void articulosPorAutor(std::string nombre);
 void publicarNoticia();
 void registrarAutor();
 void comentarNoticia();
