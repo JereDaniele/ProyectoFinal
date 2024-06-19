@@ -11,7 +11,7 @@ private:
     int DNI, edad;
 
 public:
-    Persona(): DNI(0), edad(0) {}:
+    Persona();
     void setNombre(std::string nombre);
     void setDNI(int DNI);
     void setEdad(int edad);
