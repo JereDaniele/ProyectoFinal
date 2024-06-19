@@ -27,6 +27,7 @@ private:
 public:
     Autor() {};
     Autor(std::string nombre);
+    Autor(std::string nombre, int DNI, std::string medio);
     Autor(std::string nombre, int DNI, int edad, std::string medio);
     void setMedio(std::string medio);
     std::string getMedio();
@@ -46,6 +47,7 @@ private:
     Usuario usuario;
 
 public:
+    Comentario(int numero, std::string texto, std::string nombre);
     Comentario(int numero, std::string texto, Usuario usuario);
     void setNumero(int numero);
     void setTexto(std::string texto);
@@ -64,8 +66,9 @@ private:
 
 public:
     std::vector<Comentario> comentarios;
-
+    Noticia(){};
     Noticia(std::string titulo, std::string detalle, int dia, int mes, int ano, Autor autor);
+    Noticia(std::string titulo, std::string detalle, int dia, int mes, int ano, std::string nombre);
     void setTitulo(std::string titulo);
     void setDetalle(std::string detalle);
     void setDia(int dia);
@@ -101,9 +104,11 @@ void registrarUsuario();
 void cargarUsuarios();
 void cargarAutores();
 void cargarNoticia();
+void cargarComentarios();
 void cargar();
 
 void guardarUsuarios();
 void guardarAutores();
 void guardarNoticias();
+void guardarComentarios();
 void guardar();
