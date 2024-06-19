@@ -196,7 +196,7 @@ void mostrarNoticia(std::string titulo)
             std::cout << "Titulo: " << noticia.getTitulo() << "\n";
             std::cout << "Detalle: " << noticia.getDetalle() << "\n";
             std::cout << "Fecha: " << noticia.getDia() << "/" << noticia.getMes() << "/" << noticia.getAno() << "\n";
-            std::cout << "Autor: " << (noticia.getAutor()).getNombre() << " " << noticia.getAutor().getMedio() << "\n";
+            std::cout << "Autor: " << (noticia.getAutor()).getNombre() << " " << (noticia.getAutor()).getMedio() << "\n";
             std::cout << "Comentarios:\n";
             for (auto &comentario : noticia.comentarios)
             {
@@ -207,11 +207,11 @@ void mostrarNoticia(std::string titulo)
     }
 }
 
-void articulosPorAutor(int DNI)
+void articulosPorAutor(std::string nombre)
 {
     for (auto &noticia : noticias)
     {
-        if (noticia.getAutor().getDNI() == DNI)
+        if (noticia.getAutor().getNombre() == nombre)
         {
             std::cout << noticia.getTitulo() << " (" << noticia.getDia() << "/" << noticia.getMes() << "/" << noticia.getAno() << ")\n";
         }
