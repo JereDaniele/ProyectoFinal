@@ -70,13 +70,13 @@ int main() {
                     break;
                 }
                 case 8: {
-                    int DNI;
-                    std::cout << "Coloque el DNI del autor: ";
-                    std::cin >> DNI;
+                    std::string nombre;
+                    std::cout << "Coloque el nombre del autor: ";
+                    std::cin >> nombre;
                     if (std::cin.fail()) {
                         throw std::invalid_argument("Entrada invalida. Por favor, ingrese un numero.");
                     }
-                    articulosPorAutor(DNI);
+                    articulosPorAutor(nombre);
                     break;
                 }
                 case 9:
@@ -87,9 +87,8 @@ int main() {
                     break;
             }
         } catch (const std::invalid_argument &e) {
-            std::cout << e.what() << std::endl;
-            std::cin.clear(); // Clear the error state of the stream
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Discard invalid input
+            std::cin.clear(); 
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
         }
     }
 }
